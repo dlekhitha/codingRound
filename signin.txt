@@ -1,0 +1,127 @@
+package testng;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class SignIn<WebElement> {
+	private WebDriver driver=null;
+	private WebDriverWait wait=null;
+	
+	 @Test(dataProvider = "signin")
+	  public void SignInTest(String s) {
+		  
+		  try{
+			  //click on your trips
+			  driver.findElement(By.xpath("//a[@id='userAccountLink']")).click();
+			  //click on sign in
+			  driver.findElement(By.id("SignIn")).click();
+			  //browser wiil open the sign in page
+			  //enter the email or name in username editbox
+			  driver.findElement(By.xpath("//input[@id='email']")).sendKeys("dlekhitha3108@gmail.com");
+			  //enter password
+			  driver.findElement(By.xpath("//input[@name='password']")).sendKeys("lekhitha");
+			  //uncheck the chekbox
+			  driver.findElement(By.id("persistent_login")).click();
+		  }catch(NoSuchElementException nse){
+			 printStackTrace();
+			  
+			  
+		  }
+		  
+		  
+		  
+		  
+		  
+	  }
+	  private void printStackTrace() {
+		// TODO Auto-generated method stub
+		
+	}
+	@BeforeMethod
+	  public void beforeMethod() {
+		  
+	 System.out.println("executing befroe method annotatiom");
+		  
+		  //open the url
+		  driver.get("https://www.cleartrip.com/");
+	  }
+
+	  @AfterMethod
+	  public void afterMethod() {
+		  System.out.println("executing @AfterMethod......");
+			System.out.println("navigate back to the main page");
+			driver.navigate().back();
+			
+	  }
+
+
+	 
+	   
+	  
+	  @BeforeClass
+	  public void beforeClass() {
+	 System.out.println("iam in beforeclass annotation");
+		  
+		  //create object for webdriver wait class
+		  wait=new WebDriverWait(driver,30);
+
+	  }
+
+	  @AfterClass
+	  public void afterClass() {
+		  System.out.println("executing after class");
+	  }
+
+	  @BeforeTest
+	  public void beforeTest() {
+		  System.out.println("executing before test annotation");
+		//set the chrome driver path
+		  System.setProperty("webdriver.chrome.driver", "C:\\browserExeDriver\\chromedriver_win32 (1)\\chromedriver.exe");
+		  
+		  //launch the browser
+		  driver=new ChromeDriver();
+		  
+		  
+		  //maximize the window
+		  driver.manage().window().maximize();
+		  
+	  }
+
+	  @AfterTest
+	  public void afterTest() {
+		  System.out.println("iam in afer test annotaiton");
+		  driver.quit();
+	  }
+
+	  @BeforeSuite
+	  public void beforeSuite() {
+		  System.out.println("iam in before suite annotation");
+	  }
+
+	  @AfterSuite
+	  public void afterSuite() {
+		  System.out.println("iam in after suite annotation");
+	  }
+
+	}
+
+	
+
+
